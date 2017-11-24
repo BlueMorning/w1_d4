@@ -53,25 +53,25 @@ def get_people_with_no_friends(people)
 end
 
 def get_people_with_same_favourite_tv_show(people)
-  people_with_same_fav_tv_show = []
-  
-  for person_1 in people
 
-    for person_2 in people
+  tv_show_people = {}
 
-      if  (person_1 != person_2) &&
-          people_with_same_fav_tv_show.index(person_1) == nil &&
-          people_with_same_fav_tv_show.index(person_2) == nil &&
-          person_1[:favourites][:tv_show] == person_2[:favourites][:tv_show]
+  for person in people
 
-          people_with_same_fav_tv_show.push(person_1)
-          people_with_same_fav_tv_show.push(person_2)
-
+      if (tv_show_people[person[:favourites][:tv_show]] == nil)
+          tv_show_people[person[:favourites][:tv_show]] = [person[:name]]
+      elsif
+          tv_show_people[person[:favourites][:tv_show]].push(person[:name])
       end
-
-    end
-
   end
+
+  people_with_same_fav_tv_show = {}
+
+  tv_show_people.each {|tv_show, array_names|
+    if(array_names.size > 1)
+      people_with_same_fav_tv_show[tv_show] = array_names
+    end
+  }
 
   return people_with_same_fav_tv_show
 end
